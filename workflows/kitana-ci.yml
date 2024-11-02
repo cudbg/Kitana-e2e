@@ -1,6 +1,14 @@
 name: Kitana CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - 'main'
+      - 'stable-version'
+  pull_request:
+    branches:
+      - 'main'
+      - 'stable-version'
 
 jobs:
   test:
