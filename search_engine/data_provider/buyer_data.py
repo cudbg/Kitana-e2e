@@ -1,5 +1,5 @@
 from .base_data import PrepareData
-from utils.logging_utils import log_execution, handle_exceptions
+from ..utils.logging_utils import log_execution, handle_exceptions
 import pandas as pd
 import logging
 
@@ -22,14 +22,16 @@ class PrepareBuyer(PrepareData):
         super().__init__(data_path, join_keys, from_disk=from_disk, df=buyer_df)
         self.from_disk = from_disk
         self.target_feature = target_feature
-
         if need_to_clean_data:
-            num_cols = self._data_cleaning()
+            num_cols = self._data_cleaning(self.data, self.join_keys_in_string)
         else:
             num_cols = features
 
         # Ensure that the data includes only necessary columns
-        self.data = self.data[list(set(self.join_keys_in_string).union(set(num_cols)).union({self.target_feature}))]
+        if self.data is not None:
+            self.data = self.data[list(set(self.join_keys_in_string).union(set(num_cols)).union({self.target_feature}))]
+        else:
+            raise ValueError("Data is not initialized properly.")
 
         self.one_target_feature = one_target_feature
         if self.one_target_feature:

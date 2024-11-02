@@ -2,7 +2,7 @@
 from .buyer_data import PrepareBuyer
 from .sellers import PrepareSellers
 from .seller_data import PrepareSeller
-from utils.logging_utils import log_execution, handle_exceptions
+from ..utils.logging_utils import log_execution, handle_exceptions
 import logging
 
 class PrepareBuyerSellers():

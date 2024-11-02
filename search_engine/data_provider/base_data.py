@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from utils.logging_utils import log_execution, handle_exceptions, logger
+from ..utils.logging_utils import log_execution, handle_exceptions, logger
 import logging
 
 import math
@@ -54,11 +54,11 @@ class PrepareData:
     
     @staticmethod
     @handle_exceptions
-    @log_execution(logging.WARNING)
-    def _data_cleaning(df, join_keys):
+    @log_execution(logging.DEBUG)
+    def _data_cleaning(df, join_keys_in_string):
         """Static method to perform data cleaning; calls the helper get_num_cols."""
         # Call the get_num_cols helper function
-        return PrepareData.get_num_cols(df, set(join_keys))
+        return PrepareData.get_num_cols(df, set(join_keys_in_string))
     
     @staticmethod
     @handle_exceptions

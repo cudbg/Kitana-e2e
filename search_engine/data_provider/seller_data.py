@@ -1,6 +1,6 @@
 # Import necessary modules
 from .base_data import PrepareData
-from utils.logging_utils import log_execution, handle_exceptions
+from ..utils.logging_utils import log_execution, handle_exceptions
 import pandas as pd
 import logging
 
@@ -23,7 +23,7 @@ class PrepareSeller(PrepareData):
         self.join_key_domains = {} # {join_key: {set of values}}
 
         if need_to_clean_data:
-            num_cols = self.data_cleaning()
+            num_cols = self._data_cleaning(self.data, self.join_keys_in_string)
         else:
             num_cols = features
 

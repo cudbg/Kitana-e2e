@@ -1,6 +1,6 @@
 from .seller_data import PrepareSeller
 from .buyer_data import PrepareBuyer
-from utils.logging_utils import log_execution, handle_exceptions
+from ..utils.logging_utils import log_execution, handle_exceptions
 import logging
 
 class PrepareSellers():
@@ -33,7 +33,7 @@ class PrepareSellers():
             self.sellers[seller_name].see_data()
     
     @handle_exceptions
-    @log_execution(logging.WARNING)
+    @log_execution(logging.INFO)
     def add_sellers(self, seller_name: str, seller: PrepareSeller, buyer: PrepareBuyer):
         """
         Attempts to add a seller to the collection if the seller's data has intersections with the buyer's data.
