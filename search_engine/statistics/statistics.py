@@ -1,3 +1,4 @@
+import numpy as np
 
 def linear_regression_residuals(df, X_columns, Y_column, adjusted=False):
 
