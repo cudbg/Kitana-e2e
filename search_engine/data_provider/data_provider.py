@@ -43,12 +43,36 @@ class PrepareBuyerSellers():
     
     @handle_exceptions
     @log_execution(logging.DEBUG)
+    def get_buyer_data(self):
+        """
+        Returns the buyer data.
+        """
+        return self.buyer.get_data()
+
+    @handle_exceptions
+    @log_execution(logging.DEBUG)
+    def get_buyer_join_keys(self):
+        """
+        Returns the buyer join keys.
+        """
+        return self.buyer.get_join_keys()
+
+    @handle_exceptions
+    @log_execution(logging.DEBUG)
     def get_sellers(self):
         """
         Returns the sellers object.
         """
         return self.sellers
     
+    @handle_exceptions
+    @log_execution(logging.DEBUG)
+    def get_seller_data(self):
+        """
+        Returns the seller data.
+        """
+        return self.sellers.get_sellers()
+
     @handle_exceptions
     @log_execution(logging.INFO)
     def add_buyer(self, buyer: PrepareBuyer):
@@ -83,3 +107,11 @@ class PrepareBuyerSellers():
         Adds a seller by specifying a data path and related details.
         """
         self.sellers.add_seller_by_path(data_path, join_keys, self.buyer, features=seller_features, need_to_clean_data=self.need_to_clean_data)
+
+    @handle_exceptions
+    @log_execution(logging.DEBUG)
+    def get_domain(self):
+        """
+        Returns the domain of the join keys.
+        """
+        return self.sellers.join_key_domains

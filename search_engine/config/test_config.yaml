@@ -1,0 +1,33 @@
+# Search related
+search:
+  fit_by_residual: false
+  device: 'cpu'  # cuda
+  batch_size: 'auto'
+  sketch_dir: 'sketches/'
+  iterations: 10
+
+# Data related
+data:
+  directory_path: 'data/test_dataset/seller'
+  buyer_csv: 'data/test_dataset/buyer/buyer_1.csv'
+  join_keys: 
+    - ['m']
+    - ['n']
+  target_feature: 'b1'
+  one_target_feature: false
+  need_to_clean_data: true
+
+# Experiment related
+experiment:
+  plot_results: true
+  save_results: true
+  results_dir: 'results/'
+
+# logging
+logging:
+  level: 'INFO'
+  file: 'logs/experiment.log'
+
+
+log_level: 'INFO'
+data_dir: 'data/'
