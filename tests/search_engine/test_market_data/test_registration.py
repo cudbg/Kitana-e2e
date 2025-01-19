@@ -15,7 +15,7 @@ def test_register_seller(data_market, sample_data):
     assert data_market.seller_id == 1
 
 def test_register_buyer(data_market, sample_data):
-    config = get_config()
+    config = get_config("test_config.yaml")
     buyer_id = data_market.register_buyer(
         buyer_df=sample_data["buyer_df"],
         join_keys=sample_data["join_keys"],

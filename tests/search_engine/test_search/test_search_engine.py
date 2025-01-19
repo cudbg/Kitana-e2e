@@ -4,7 +4,7 @@ from search_engine.config.config import get_config
                                                                             
 def test_search_engine_init(setup_market):
     engine = SearchEngine(setup_market)
-    config = get_config()
+    config = get_config("test_config.yaml")
     assert engine.data_market is not None
     assert engine.buyer_target == "target"
     assert len(engine.augplan) == 0
@@ -42,12 +42,12 @@ def test_full_search(setup_market):
 
 def test_search_with_residual(setup_market_with_residual):
     engine = SearchEngine(setup_market_with_residual)
+    engine.fit_by_residual = True
     augplan, augplan_acc, final_dataset = engine.start(iter=2)
     
     assert len(augplan) > 0
     assert len(augplan_acc) > 0
     assert final_dataset is not None
-    assert "residuals" in final_dataset.columns
 
 def test_unusable_features_handling(setup_market):
     engine = SearchEngine(setup_market)

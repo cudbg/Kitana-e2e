@@ -1,6 +1,6 @@
 import pytest
 import pandas as pd
-import torch
+from pathlib import Path
 from search_engine.market.data_market import DataMarket
 from search_engine.config.config import get_config
 
@@ -44,7 +44,7 @@ def sample_market_data():
 
 @pytest.fixture
 def setup_market(sample_market_data):
-    config = get_config()
+    config = get_config("test_config.yaml")
     market = DataMarket()
     
     # Register sellers
@@ -75,7 +75,7 @@ def setup_market(sample_market_data):
 
 @pytest.fixture
 def setup_market_with_residual(sample_market_data):
-    config = get_config()
+    config = get_config("test_config.yaml")
     market = DataMarket()
     
     # Register sellers

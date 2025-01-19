@@ -35,10 +35,10 @@ def sample_data():
 
 @pytest.fixture
 def data_market():
-    config = get_config()
+    config = get_config("test_config.yaml")
     return DataMarket()
 
 @pytest.fixture
 def data_market_with_residual():
-    config = get_config()
+    config = get_config("test_config.yaml")
     return DataMarket(device=config.search.device, fit_by_residual=True)

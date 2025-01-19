@@ -16,7 +16,7 @@ def test_get_seller_sketch(data_market, sample_data):
         assert isinstance(sketch, SellerSketch)
 
 def test_get_buyer_sketch(data_market, sample_data):
-    config = get_config()
+    config = get_config("test_config.yaml")
     buyer_id = data_market.register_buyer(
         buyer_df=sample_data["buyer_df"],
         join_keys=sample_data["join_keys"],
@@ -30,7 +30,7 @@ def test_get_buyer_sketch(data_market, sample_data):
         assert isinstance(sketch, BuyerSketch)
 
 def test_reset_operations(data_market, sample_data):
-    config = get_config()
+    config = get_config("test_config.yaml")
     # Register buyer first
     data_market.register_buyer(
         buyer_df=sample_data["buyer_df"],

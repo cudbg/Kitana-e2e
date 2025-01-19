@@ -25,9 +25,9 @@ experiment:
 
 # logging
 logging:
-  level: 'DEBUG'
+  level: 'INFO'
   file: 'logs/experiment.log'
 
 
-log_level: 'DEBUG'
+log_level: 'INFO'
 data_dir: 'data/'

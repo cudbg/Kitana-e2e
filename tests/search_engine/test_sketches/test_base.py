@@ -7,7 +7,7 @@ from search_engine.config.config import get_config
 
 @pytest.fixture
 def setup_base():
-    config = get_config()
+    config = get_config("test_config.yaml")
     join_key_domain = {
         "country": ["A", "B", "C"],
         "year": [2020, 2021, 2022]
@@ -16,7 +16,7 @@ def setup_base():
 
 def test_init_base(setup_base):
     base = setup_base
-    config = get_config()
+    config = get_config("test_config.yaml")
     assert base.device == config.search.device
     assert base.join_key_domain == {
         "country": ["A", "B", "C"],
