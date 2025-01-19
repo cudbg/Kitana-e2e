@@ -1,6 +1,7 @@
 import pytest
 import pandas as pd
 from search_engine.market.data_market import DataMarket
+from search_engine.config.config import get_config
 
 @pytest.fixture
 def sample_data():
@@ -34,4 +35,10 @@ def sample_data():
 
 @pytest.fixture
 def data_market():
-    return DataMarket(device='cpu')
+    config = get_config()
+    return DataMarket()
+
+@pytest.fixture
+def data_market_with_residual():
+    config = get_config()
+    return DataMarket(device=config.search.device, fit_by_residual=True)

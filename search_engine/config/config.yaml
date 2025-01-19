@@ -1,0 +1,8 @@
+search:
+  fit_by_residual: false
+  device: 'cpu'
+  batch_size: 'auto'
+  sketch_dir: 'sketches/'
+
+log_level: 'INFO'
+data_dir: 'data/'

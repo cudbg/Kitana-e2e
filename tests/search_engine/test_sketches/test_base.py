@@ -3,18 +3,21 @@ import pandas as pd
 import torch
 from search_engine.sketches.base import SketchBase
 from search_engine.sketches.loader import SketchLoader
+from search_engine.config.config import get_config
 
 @pytest.fixture
 def setup_base():
+    config = get_config()
     join_key_domain = {
         "country": ["A", "B", "C"],
         "year": [2020, 2021, 2022]
     }
-    return SketchBase(join_key_domain=join_key_domain, device='cpu', is_buyer=False)
+    return SketchBase(join_key_domain=join_key_domain, device=config.search.device, is_buyer=False)
 
 def test_init_base(setup_base):
     base = setup_base
-    assert base.device == 'cpu'
+    config = get_config()
+    assert base.device == config.search.device
     assert base.join_key_domain == {
         "country": ["A", "B", "C"],
         "year": [2020, 2021, 2022]

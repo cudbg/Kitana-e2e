@@ -10,6 +10,7 @@ from ..sketches.sketch_buyer import BuyerSketch
 from ..sketches.sketch_seller import SellerSketch
 from ..statistics.statistics import linear_regression_residuals
 from ..utils.logging_utils import log_execution, handle_exceptions
+from ..config.config import get_config
 
 class DataMarket():
     """
@@ -18,9 +19,11 @@ class DataMarket():
     """
     @handle_exceptions
     @log_execution(logging.INFO)
-    def __init__(self, device='cpu'):
+    def __init__(self):
+        config = get_config()
+        self.device = config.search.device
         # Storage for sketch bases
-        self.seller_sketches = {}       # Format: join_key: [
+        self.seller_sketches = {}      # Format: join_key: [
                                        #           {id, join_key, join_key_domain, seller_sketch},
                                        #           {id, join_key, join_key_domain, seller_sketch}
                                        #         ]
@@ -41,7 +44,6 @@ class DataMarket():
         self.buyer_id_to_df_and_name = []
 
         self.augplan_acc = []
-        self.device = device
         
     @handle_exceptions
     @log_execution(logging.DEBUG)

@@ -6,6 +6,7 @@ from .loader import SketchLoader
 import pandas as pd
 from itertools import combinations
 import logging
+from ..config.config import get_config
 
 
 class SketchBase:
@@ -19,6 +20,9 @@ class SketchBase:
         :param device: Device type ('cpu' or 'cuda')
         :param is_buyer: Whether it is a buyer
         """
+        config = get_config()
+        self.device = config.search.device
+        self.batch_size = config.search.batch_size
         self.feature_index_mapping = {}
         self.dfid_feature_mapping = {}
         self.device = device
@@ -30,8 +34,11 @@ class SketchBase:
             self.gpu_free_mem = gpu_total_mem - torch.cuda.memory_allocated(0)
         else:
             self.gpu_free_mem = None
-        self.gpu_batch_size, self.ram_batch_size = self.estimate_batch_size()
-        self.sketch_loader = SketchLoader(self.gpu_batch_size, device=device, is_buyer=is_buyer)
+        if self.batch_size == 'auto':
+            self.gpu_batch_size, self.ram_batch_size = self.estimate_batch_size()
+        else:
+            self.gpu_batch_size = self.ram_batch_size = int(self.batch_size)
+        self.sketch_loader = SketchLoader(self.gpu_batch_size, device=self.device, is_buyer=is_buyer)
 
     @handle_exceptions
     @log_execution(logging.DEBUG)
