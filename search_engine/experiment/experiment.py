@@ -79,7 +79,6 @@ class ScaledExperiment:
             raise ValueError("No valid join keys found in sellers")
             
         buyer_join_keys = valid_join_key if join_key_changed else list(self.prepare_data.get_buyer_join_keys())
-        
         self.data_market = DataMarket()
         self.data_market.register_buyer(
             buyer_df=self.prepare_data.get_buyer_data(),
@@ -114,9 +113,9 @@ class ScaledExperiment:
         )
         
         start_time = time.time()
-        augplan, accuracies, _ = self.search_engine.start(iter=self.config.search.iterations)
+        augplan, accuracies, res_dataset = self.search_engine.start(iter=self.config.search.iterations)
         end_time = time.time()
-        
+        logging.info(f"The accuracy: {self.data_market.augplan_acc}")
         self.results = {
             'augplan': augplan,
             'accuracy': accuracies,
@@ -139,6 +138,7 @@ class ScaledExperiment:
         
         if self.config.experiment.save_results:
             plt.savefig(os.path.join(self.config.experiment.results_dir, 'accuracy_plot.png'))
+            logging.info(f"Resulting charts saved to {self.config.experiment.results_dir}")
         plt.show()
 
     @handle_exceptions
@@ -153,7 +153,7 @@ class ScaledExperiment:
         self.run_search()
         
         logging.info(f"Search completed in {self.results['time_taken']:.2f} seconds")
-        logging.info(f"Final accuracy: {self.results['accuracy']:.4f}")
+        logging.info(f"Final accuracy: {self.results['accuracy']}")
         
         self.plot_results()
         return self.results

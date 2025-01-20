@@ -7,7 +7,7 @@ def main():
     results = experiment.run()
     
     print("\nExperiment Results:")
-    print(f"Final Accuracy: {results['accuracy']:.4f}")
+    print(f"Final Accuracy: {results['accuracy']}")
     print(f"Time Taken: {results['time_taken']:.2f} seconds")
     print(f"Number of Features Found: {len(results['augplan'])}")
 

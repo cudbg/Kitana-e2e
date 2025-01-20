@@ -14,8 +14,8 @@ class SearchConfig:
 
 @dataclass
 class DataConfig:
-    directory_path: str = 'data/test_dataset/seller'
-    buyer_csv: str = 'data/test_dataset/buyer/buyer_1.csv'
+    directory_path: str = 'data/test_data_small/seller'
+    buyer_csv: str = 'data/test_data_small/buyer/buyer.csv'
     join_keys: list = None
     target_feature: str = 'b1'
     one_target_feature: bool = False
@@ -46,7 +46,7 @@ class LoggingConfig:
         # Configure logging
         logging.basicConfig(
             level=getattr(logging, self.level.upper()),
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
                 logging.FileHandler(self.file),
                 logging.StreamHandler()

@@ -8,8 +8,8 @@ search:
 
 # Data related
 data:
-  directory_path: 'data/test_dataset/seller'
-  buyer_csv: 'data/test_dataset/buyer/buyer_1.csv'
+  directory_path: 'data/test_data_small/seller'
+  buyer_csv: 'data/test_data_small/buyer/buyer.csv'
   join_keys: 
     - ['m']
     - ['n']
@@ -25,9 +25,5 @@ experiment:
 
 # logging
 logging:
-  level: 'DEBUG'
+  level: 'ERROR'
   file: 'logs/experiment.log'
-
-
-log_level: 'DEBUG'
-data_dir: 'data/'
