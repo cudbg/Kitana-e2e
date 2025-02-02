@@ -1,12 +1,16 @@
 import os
 import time
 from tqdm import tqdm
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import torch
 from ..data_provider import PrepareBuyerSellers, PrepareBuyer, PrepareSeller
 from ..market import DataMarket
 from ..search import SearchEngine
 from ..utils.logging_utils import log_execution, handle_exceptions
+from ..utils.plot_utils import plot_whiskers
+from ..entity_linking.el_test import DBpediaLinker
 import logging
 
 class ScaledExperiment:
@@ -128,18 +132,19 @@ class ScaledExperiment:
         """Plot experiment results if enabled."""
         if not self.config.experiment.plot_results:
             return
-            
-        plt.figure(figsize=(10, 6))
-        plt.plot(self.results['accuracy'])
-        plt.xlabel('Iterations')
-        plt.ylabel('Accuracy')
-        plt.title('Augmented Plan Accuracy')
-        plt.grid(True)
         
-        if self.config.experiment.save_results:
-            plt.savefig(os.path.join(self.config.experiment.results_dir, 'accuracy_plot.png'))
-            logging.info(f"Resulting charts saved to {self.config.experiment.results_dir}")
-        plt.show()
+        accuracy = self.results['accuracy']
+
+        df = pd.DataFrame({
+            'Epoch': np.arange(1, len(accuracy) + 1),
+            'Accuracy': accuracy
+        })
+
+        # Assuming a fixed variability for illustrative purposes
+        lower_bound = 0.01
+        upper_bound = 0.01
+        plot_whiskers(df, 'Epoch', ['Accuracy'], ['Model Accuracy'], ['blue'], ['-'], figsize=(12, 8), resultname=f'{self.config.experiment.results_dir}/accuracy_plot.png')
+
 
     @handle_exceptions
     @log_execution(logging.INFO)

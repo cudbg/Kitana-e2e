@@ -165,3 +165,7 @@ data/
 #.idea/
 test_sketches/
 results/accuracy_plot.png
+
+knowledge_base
+el_data/
+tmp/

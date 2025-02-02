@@ -20,10 +20,13 @@ class DataConfig:
     target_feature: str = 'b1'
     one_target_feature: bool = False
     need_to_clean_data: bool = True
+    entity_linking_percentage: list = None
 
     def __post_init__(self):
         if self.join_keys is None:
             self.join_keys = [['m'], ['n']]
+        if self.entity_linking_percentage is None:
+            self.entity_linking_percentage = [100]
 
 @dataclass
 class ExperimentConfig:

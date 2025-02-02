@@ -8,14 +8,14 @@ search:
 
 # Data related
 data:
-  directory_path: 'data/test_data_small/seller'
-  buyer_csv: 'data/test_data_small/buyer/buyer.csv'
+  directory_path: 'data/country/seller'
+  buyer_csv: 'data/country/buyer/buyer_gini.csv'
   join_keys: 
-    - ['m']
-    - ['n']
-  target_feature: 'b1'
+    - ['country']
+  target_feature: 'value'
   one_target_feature: false
   need_to_clean_data: true
+  entity_linking_percentage: [2,5,10]
 
 # Experiment related
 experiment:
