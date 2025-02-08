@@ -1,12 +1,16 @@
 import os
 import time
 from tqdm import tqdm
+import pandas as pd
+import numpy as np
 import matplotlib.pyplot as plt
 import torch
 from ..data_provider import PrepareBuyerSellers, PrepareBuyer, PrepareSeller
 from ..market import DataMarket
 from ..search import SearchEngine
 from ..utils.logging_utils import log_execution, handle_exceptions
+from ..utils.plot_utils import plot_whiskers
+from ..entity_linking.el_test import DBpediaLinker
 import logging
 
 class ScaledExperiment:
@@ -79,7 +83,6 @@ class ScaledExperiment:
             raise ValueError("No valid join keys found in sellers")
             
         buyer_join_keys = valid_join_key if join_key_changed else list(self.prepare_data.get_buyer_join_keys())
-        
         self.data_market = DataMarket()
         self.data_market.register_buyer(
             buyer_df=self.prepare_data.get_buyer_data(),
@@ -114,9 +117,9 @@ class ScaledExperiment:
         )
         
         start_time = time.time()
-        augplan, accuracies, _ = self.search_engine.start(iter=self.config.search.iterations)
+        augplan, accuracies, res_dataset = self.search_engine.start(iter=self.config.search.iterations)
         end_time = time.time()
-        
+        logging.info(f"The accuracy: {self.data_market.augplan_acc}")
         self.results = {
             'augplan': augplan,
             'accuracy': accuracies,
@@ -129,17 +132,19 @@ class ScaledExperiment:
         """Plot experiment results if enabled."""
         if not self.config.experiment.plot_results:
             return
-            
-        plt.figure(figsize=(10, 6))
-        plt.plot(self.results['accuracy'])
-        plt.xlabel('Iterations')
-        plt.ylabel('Accuracy')
-        plt.title('Augmented Plan Accuracy')
-        plt.grid(True)
         
-        if self.config.experiment.save_results:
-            plt.savefig(os.path.join(self.config.experiment.results_dir, 'accuracy_plot.png'))
-        plt.show()
+        accuracy = self.results['accuracy']
+
+        df = pd.DataFrame({
+            'Epoch': np.arange(1, len(accuracy) + 1),
+            'Accuracy': accuracy
+        })
+
+        # Assuming a fixed variability for illustrative purposes
+        lower_bound = 0.01
+        upper_bound = 0.01
+        plot_whiskers(df, 'Epoch', ['Accuracy'], ['Model Accuracy'], ['blue'], ['-'], figsize=(12, 8), resultname=f'{self.config.experiment.results_dir}/accuracy_plot.png')
+
 
     @handle_exceptions
     @log_execution(logging.INFO)
@@ -153,7 +158,7 @@ class ScaledExperiment:
         self.run_search()
         
         logging.info(f"Search completed in {self.results['time_taken']:.2f} seconds")
-        logging.info(f"Final accuracy: {self.results['accuracy']:.4f}")
+        logging.info(f"Final accuracy: {self.results['accuracy']}")
         
         self.plot_results()
         return self.results

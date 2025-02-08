@@ -23,13 +23,22 @@ class PrepareBuyerSellers():
         Filters and validates join keys based on seller domain keys.
         """
         domain_dict = self.sellers.join_key_domains
+        # Initialize the list to hold the validated join keys
         valid_join_keys = []
         join_key_changed = False
     
+        # Iterate over each list of keys in the join_keys list
         for keys in join_keys:
-            key = '_'.join(keys) if len(keys) > 1 else keys[0]
+            # Form the key as it would appear in the domain dictionary
+            # Join the keys with an underscore if there's more than one key in the list
+            if len(keys) > 1:
+                key = '_'.join(keys)
+            else:
+                key = keys[0]
+            # Check if the formed key is in the domain dictionary
             if key in domain_dict:
-                valid_join_keys.append(keys)
+                # If the key exists, add the original list of keys to the valid list
+                valid_join_keys.append(key)
 
         return valid_join_keys, join_key_changed
     

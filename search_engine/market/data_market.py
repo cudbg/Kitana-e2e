@@ -132,7 +132,7 @@ class DataMarket():
         self.buyer_target_feature = target_feature
         X = list(self.buyer_dataset.columns.difference([target_feature] + join_keys))
         # Calculate the residuals from linear regression
-        res, r2 = linear_regression_residuals(self.buyer_dataset, X_columns=X, Y_column=target_feature, adjusted=False)
+        res, r2 = linear_regression_residuals(self.buyer_dataset, X_columns=X, Y_column=target_feature, adjusted=True)
         self.augplan_acc.append(r2)
         if fit_by_residual:
             self.buyer_dataset = res[join_keys + ["residuals"]]

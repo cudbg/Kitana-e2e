@@ -8,14 +8,14 @@ search:
 
 # Data related
 data:
-  directory_path: 'data/test_dataset/seller'
-  buyer_csv: 'data/test_dataset/buyer/buyer_1.csv'
+  directory_path: 'data/country/seller'
+  buyer_csv: 'data/country/buyer/buyer_gini.csv'
   join_keys: 
-    - ['m']
-    - ['n']
-  target_feature: 'b1'
+    - ['country']
+  target_feature: 'value'
   one_target_feature: false
   need_to_clean_data: true
+  entity_linking_percentage: [2,5,10]
 
 # Experiment related
 experiment:
@@ -25,9 +25,5 @@ experiment:
 
 # logging
 logging:
-  level: 'DEBUG'
+  level: 'ERROR'
   file: 'logs/experiment.log'
-
-
-log_level: 'DEBUG'
-data_dir: 'data/'

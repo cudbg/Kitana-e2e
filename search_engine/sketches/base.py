@@ -195,10 +195,9 @@ class SketchBase:
                     lo = mid + 1
             return lo
         index = bisect(self.feature_index_mapping[batch_id], feature_index) - 1
-        print("In the get_df_by_feature_index", self.feature_index_mapping[batch_id], feature_index, index)
         start_index, df_id, offset = self.feature_index_mapping[batch_id][index]
         local_feature_index = feature_index - start_index + offset
-        print("In the get_df_by_feature_index", self.dfid_feature_mapping[df_id], local_feature_index)
+        
         return df_id, self.dfid_feature_mapping[df_id][local_feature_index]
 
     @handle_exceptions

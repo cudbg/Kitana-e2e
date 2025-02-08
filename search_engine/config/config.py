@@ -14,16 +14,19 @@ class SearchConfig:
 
 @dataclass
 class DataConfig:
-    directory_path: str = 'data/test_dataset/seller'
-    buyer_csv: str = 'data/test_dataset/buyer/buyer_1.csv'
+    directory_path: str = 'data/test_data_small/seller'
+    buyer_csv: str = 'data/test_data_small/buyer/buyer.csv'
     join_keys: list = None
     target_feature: str = 'b1'
     one_target_feature: bool = False
     need_to_clean_data: bool = True
+    entity_linking_percentage: list = None
 
     def __post_init__(self):
         if self.join_keys is None:
             self.join_keys = [['m'], ['n']]
+        if self.entity_linking_percentage is None:
+            self.entity_linking_percentage = [100]
 
 @dataclass
 class ExperimentConfig:
@@ -46,7 +49,7 @@ class LoggingConfig:
         # Configure logging
         logging.basicConfig(
             level=getattr(logging, self.level.upper()),
-            format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+            format='%(asctime)s - %(levelname)s - %(message)s',
             handlers=[
                 logging.FileHandler(self.file),
                 logging.StreamHandler()
