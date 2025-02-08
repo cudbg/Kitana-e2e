@@ -105,6 +105,105 @@ def main():
     print("selected: ",get_selected("el_data/country_extend/seller/10/selected_input.json"))
     converter.apply_convertion(input_data=get_selected("el_data/country_extend/seller/10/selected_input.json"), output_dir="/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend/seller/10/")
 
+def topk_connection_single_joinable_search():
+
+    file_label = "100_top10_single"
+    linker = DBpediaLinker(output_dir_base=f"el_data/country_extend_table_search/buyer/{file_label}/", auto_load_meta_data=True)
+    input_data = {
+        "data/country_extend_table_search/buyer/master.csv": ["Country"]
+    }
+    percentage_list = [100]
+    if not os.path.exists(os.path.join(linker.output_dir_base, "structured_data.json")):
+        linker.batch_link(input_data=input_data, percentage_list=percentage_list)
+
+    if not os.path.exists(f"el_data/country_extend_table_search/buyer/{file_label}/Predictions_list.json"):
+        executer = TURLExecuter(
+            input_data=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/buyer/{file_label}/structured_data.json",
+            host_input_dir=f"/TURL/data/kitana/country_extend_table_search/buyer/{file_label}",
+            output_path=f"/home/ec2-user/TURL/data/kitana/country_extend_table_search/buyer/{file_label}/predictions.txt"
+        )
+        executer.run_container_evaluation_single()
+
+
+    buyer_converter = TopkPredictionEntityConverter(
+        prediction_list_path=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/seller/{file_label}/Predictions_list.txt",
+        linker=linker,
+        data_file_path=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/buyer/{file_label}/structured_data.json"
+    )
+    buyer_converter.get_converted_topk_single(10)
+    # Directly copy the buyer csv to the output directory
+    os.system(f"cp data/country_extend_table_search/buyer/master.csv el_data/country_extend_table_search/buyer/{file_label}/master.csv")
+    
+
+    linker = DBpediaLinker(output_dir_base=f"el_data/country_extend_table_search/seller/{file_label}/", auto_load_meta_data=True)
+    input_data = build_input_data("data/country_extend_table_search/seller", ["Country"])
+    percentage_list = [100] * len(input_data)
+    if not os.path.exists(os.path.join(linker.output_dir_base, "structured_data.json")):
+        linker.batch_link(input_data=input_data, percentage_list=percentage_list)
+
+    if not os.path.exists(f"el_data/country_extend_table_search/seller/{file_label}/Predictions_list.txt"):
+        executer = TURLExecuter(
+            input_data=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/seller/{file_label}/structured_data.json",
+            host_input_dir=f"/TURL/data/kitana/country_extend_table_search/seller/{file_label}",
+            output_path=f"/home/ec2-user/TURL/data/kitana/country_extend_table_search/seller/{file_label}/predictions.txt"
+        )
+        executer.run_container_evaluation_single()
+    
+    seller_converter = TopkPredictionEntityConverter(
+        prediction_list_path=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/seller/{file_label}/Predictions_list.txt",
+        linker=linker,
+        data_file_path=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/seller/{file_label}/structured_data.json"
+    )
+    seller_converter.get_converted_topk_single(10)
+
+    joiner = CandidateJoiner(buyer_converter.entity_mappings, seller_converter.entity_mappings)
+    joiner.apply_conversion_with_candidate_join(
+        input_data=get_selected(f"el_data/country_extend_table_search/seller/{file_label}/selected_input.json"),
+        output_dir=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/seller/{file_label}/"
+    )
+
+def topk_connection_single_dbpedia_joinable_search():
+    file_label = "100_top10_single_dbpedia"
+    linker = DBpediaLinker(output_dir_base=f"el_data/country_extend_table_search/buyer/{file_label}/", auto_load_meta_data=True)
+    input_data = {
+        "data/country_extend_table_search/buyer/master.csv": ["Country"]
+    }
+    percentage_list = [100]
+    if not os.path.exists(os.path.join(linker.output_dir_base, "structured_data.json")):
+        linker.batch_link(input_data=input_data, percentage_list=percentage_list)
+        
+    buyer_converter = TopkPredictionEntityConverter(
+        linker=linker,
+        data_file_path=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/buyer/{file_label}/structured_data.json",
+        dbpedia_only=True
+    )
+
+    print("converted buyer: ", buyer_converter.get_converted_topk_single(10))
+    # Directly copy the buyer csv to the output directory
+    os.system(f"cp data/country_extend_table_search/buyer/master.csv el_data/country_extend_table_search/buyer/{file_label}/master.csv")
+
+
+    linker = DBpediaLinker(output_dir_base=f"el_data/country_extend_table_search/seller/{file_label}/", auto_load_meta_data=True)
+    input_data = build_input_data("data/country_extend_table_search/seller", ["Country"])
+    percentage_list = [100] * len(input_data)
+    if not os.path.exists(os.path.join(linker.output_dir_base, "structured_data.json")):
+        linker.batch_link(input_data=input_data, percentage_list=percentage_list)
+
+
+    seller_converter = TopkPredictionEntityConverter(
+        linker=linker,
+        data_file_path=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/seller/{file_label}/structured_data.json",
+        dbpedia_only=True
+    )
+    print("converted seller: ", seller_converter.get_converted_topk_single(10))
+
+    joiner = CandidateJoiner(buyer_converter.entity_mappings, seller_converter.entity_mappings)
+    joiner.apply_conversion_with_candidate_join(
+        input_data=get_selected(f"el_data/country_extend_table_search/seller/{file_label}/selected_input.json"),
+        output_dir=f"/home/ec2-user/Kitana_e2e/Kitana-e2e/el_data/country_extend_table_search/seller/{file_label}/"
+    )
+
+
 def topk_connection_single_dbpedia():
     file_label = "100_top10_single_dbpedia"
     linker = DBpediaLinker(output_dir_base=f"el_data/country_extend/buyer/{file_label}/", auto_load_meta_data=True)
@@ -273,4 +372,4 @@ def topk_connection():
     
     
 if __name__ == "__main__":
-    topk_connection_single_dbpedia()
+    topk_connection_single_joinable_search()

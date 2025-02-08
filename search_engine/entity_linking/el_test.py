@@ -788,7 +788,8 @@ class CandidateJoiner():
                         if intersection:
                             s_entity["linked_entity"] = entity["original_entity"]
                         else:
-                            s_entity["linked_entity"] = s_entity["original_entity"]
+                            if "linked_entity" not in s_entity:
+                                s_entity["linked_entity"] = s_entity["original_entity"]
         return seller_candidates
 
     def apply_conversion_with_candidate_join(self, input_data: dict, output_dir: str):
@@ -802,7 +803,7 @@ class CandidateJoiner():
 
             # Convert the entity mapping list to a dictionary for faster lookup
             mapping_dict = {item['original_entity'][1]: item['linked_entity'][1] for item in seller_candidates[i]}
-            print("mapping_dict: ", mapping_dict)
+
             # Apply the conversion to the target columns
             for column in target_columns:
                 if column in df.columns:
