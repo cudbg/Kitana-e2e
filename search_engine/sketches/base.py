@@ -97,6 +97,15 @@ class SketchBase:
 
     @handle_exceptions
     @log_execution(logging.DEBUG)
+    def _register_df_from_disk(self):
+        """
+        should load all the sketches from disk and register them to the sketch loader
+        TODO: think how to map the df_id to real dataframes
+        """
+        pass
+
+    @handle_exceptions
+    @log_execution(logging.DEBUG)
     def _calibrate(self, df_id, df, num_features, key_domains, join_keys, normalized=True, fit_by_residual=False, is_buyer=False):
         """
         Calibrate the dataframe to get the 1, X, X_X, and X_Y matrices.

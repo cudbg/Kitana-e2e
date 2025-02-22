@@ -9,8 +9,8 @@
 
 # Array of search keywords
 keywords=(
-    "ETF"
-    "stock ticker"
+    "Country",
+    "United Nation"
 )
 
 # Loop through each keyword

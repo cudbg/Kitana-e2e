@@ -59,6 +59,41 @@ def plot_two_experiments_results_max(
 
     return df
 
+def plot_two_experiments_results_max_kitana_alite(
+    origin_result: dict, 
+    alite_result: dict,
+    output_fig="experiment_comparison.png"
+):
+    acc1 = origin_result["accuracy"] 
+    acc2 = alite_result["accuracy"]
+    max_len = max(len(acc1), len(acc2))
+    acc1_padded = list(acc1) + [np.nan] * (max_len - len(acc1))
+    acc2_padded = list(acc2) + [np.nan] * (max_len - len(acc2))
+
+    iterations = range(1, max_len + 1)
+    df = pd.DataFrame({
+        "iteration": iterations,
+        "origin_exp": acc1_padded,
+        "alite_exp": acc2_padded
+    })
+
+
+    from search_engine.utils.plot_utils import plot_whiskers
+    plot_whiskers(
+        df=df,
+        x_col="iteration", 
+        y_cols=["origin_exp", "alite_exp"],
+        labels=["Origin Exp", "Alite Exp"],
+        colors=["blue", "red"],
+        linestyles=["-", "--"],
+        figsize=(8, 6),
+        resultname=output_fig,
+        xlabel="Iteration",
+        ylabel="Accuracy"
+    )
+
+    return df
+
 def run_multiple_experiment():
     config1 = Config(
         search=SearchConfig(iterations=12),
@@ -635,14 +670,14 @@ def run_zip_exp():
 
     return results_list
 
-def run_ticker_exp():
+def run_country_exp():
     config1 = Config(
-        search=SearchConfig(iterations=12),
+        search=SearchConfig(iterations=20),
         data=DataConfig(
-            directory_path='data/stock_ticker_datasets/seller',
-            buyer_csv='data/stock_ticker_datasets/buyer/financial data sp500 companies.csv',
-            join_keys=[['Ticker']],
-            target_feature='Income Before Tax',
+            directory_path='data/country_extend_1/seller',
+            buyer_csv='data/country_extend_1/buyer/buyer_gini.csv',
+            join_keys=[['country']],
+            target_feature='value',
             one_target_feature=False,
             need_to_clean_data=True
         ),
@@ -664,17 +699,165 @@ def run_ticker_exp():
     # Return as list
     results_list = [company_experiment_result]
 
+    return results_list
+
+
+def run_country_alite_exp():
+    config1 = Config(
+        search=SearchConfig(iterations=20),
+        data=DataConfig(
+            directory_path='data/alite_only_searched_buyer_gini.csv_country_with_origin_datasets/seller',
+            buyer_csv='data/alite_only_searched_buyer_gini.csv_country_with_origin_datasets/buyer/buyer_gini.csv',
+            join_keys=[['country']],
+            target_feature='value',
+            one_target_feature=False,
+            need_to_clean_data=True
+        ),
+        experiment=ExperimentConfig(
+            plot_results=True,
+            results_dir='results/'
+        ),
+        logging=LoggingConfig(
+            level='ERROR',
+            file='logs/experiment.log'
+        )
+    )
+
+    # Run exps
+    company = ScaledExperiment(config1)
+    
+    company_experiment_result = company.run()
+
+    # Return as list
+    results_list = [company_experiment_result]
+
+    return results_list
+
+def run_ticker_exp():
+    config1 = Config(
+        search=SearchConfig(iterations=12),
+        data=DataConfig(
+            directory_path='data/stock_ticker_datasets/seller',
+            buyer_csv='data/stock_ticker_datasets/buyer/financial data sp500 companies.csv',
+            join_keys=[['Ticker']],
+            target_feature='Income Before Tax',
+            one_target_feature=False,
+            need_to_clean_data=True
+        ),
+        experiment=ExperimentConfig(
+            plot_results=True,
+            results_dir='results/'
+        ),
+        logging=LoggingConfig(
+            level='ERROR',
+            file='logs/experiment.log'
+        )
+    )
+    config2 = Config(
+        search=SearchConfig(iterations=12),
+        data=DataConfig(
+            directory_path='data/alite_searched_stock_ticker_datasets/seller',
+            buyer_csv='data/alite_searched_stock_ticker_datasets/buyer/financial data sp500 companies.csv',
+            join_keys=[['Ticker']],
+            target_feature='Income Before Tax',
+            one_target_feature=False,
+            need_to_clean_data=True
+        ),
+        experiment=ExperimentConfig(
+            plot_results=True,
+            results_dir='results/'
+        ),
+        logging=LoggingConfig(
+            level='ERROR',
+            file='logs/experiment.log'
+        )
+    )
+    # Run exps
+    company = ScaledExperiment(config1)
+    company_2 = ScaledExperiment(config2)
+    
+    company_experiment_result = company.run()
+    company_experiment_result_2 = company_2.run()
+
+    # Return as list
+    results_list = [company_experiment_result]
+    results_list.append(company_experiment_result_2)
+
     # plot
-    plot_experiments(
+    plot_two_experiments_results_max_kitana_alite(
         origin_result=company_experiment_result,
-        output_fig="results/comparison_ticker_whiskers.png"
+        alite_result=company_experiment_result_2,
+        output_fig="results/comparison_ticker_alite_whiskers.png"
     )
 
     return results_list
 
+
+
+def run_ticker_alite_oriented_exp():
+    config1 = Config(
+        search=SearchConfig(iterations=12),
+        data=DataConfig(
+            directory_path='data/alite_only_searched_stock_ticker_kitana_origin_datasets/seller',
+            buyer_csv='data/alite_only_searched_stock_ticker_kitana_origin_datasets/buyer/financial data sp500 companies.csv',
+            join_keys=[['Ticker']],
+            target_feature='Income Before Tax',
+            one_target_feature=False,
+            need_to_clean_data=True
+        ),
+        experiment=ExperimentConfig(
+            plot_results=True,
+            results_dir='results/'
+        ),
+        logging=LoggingConfig(
+            level='CRITICAL',
+            file='logs/experiment.log'
+        )
+    )
+    config2 = Config(
+        search=SearchConfig(iterations=12),
+        data=DataConfig(
+            directory_path='data/alite_only_searched_stock_ticker_datasets/seller',
+            buyer_csv='data/alite_only_searched_stock_ticker_datasets/buyer/financial data sp500 companies.csv',
+            join_keys=[['Ticker']],
+            target_feature='Income Before Tax',
+            one_target_feature=False,
+            need_to_clean_data=True
+        ),
+        experiment=ExperimentConfig(
+            plot_results=True,
+            results_dir='results/'
+        ),
+        logging=LoggingConfig(
+            level='ERROR',
+            file='logs/experiment.log'
+        )
+    )
+    # Run exps
+    company = ScaledExperiment(config1)
+    company_2 = ScaledExperiment(config2)
+    
+    company_experiment_result = company.run()
+    company_experiment_result_2 = company_2.run()
+
+    # Return as list
+    results_list = [company_experiment_result]
+    results_list.append(company_experiment_result_2)
+
+    # plot
+    plot_two_experiments_results_max_kitana_alite(
+        origin_result=company_experiment_result,
+        alite_result=company_experiment_result_2,
+        output_fig="results/ticker_kitana_alite_oriented_exp.png"
+    )
+
+    return results_list
+
+
 if __name__ == "__main__":
-    result = run_ticker_exp()
-    with open(f"results/ticker_exp.json", "w") as f:
+    exp_function = run_country_exp
+    result = exp_function()
+    with open(f"results/{exp_function.__name__}.json", "w") as f:
         json.dump(result, f)
     # parser = argparse.ArgumentParser(description="Run specific experiment function.")
     # parser.add_argument("--exp", type=str, required=True, help="Name of the experiment to run.")

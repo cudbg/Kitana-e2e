@@ -8,6 +8,16 @@ import math
 class PrepareData:
     def __init__(self, data_path: str, join_keys: list, from_disk: bool, df: pd.DataFrame = None):
         if from_disk:
+            # Check the first row to see if the data has the corresponding columns
+            header_df = pd.read_csv(data_path, nrows=0)
+            header_cols = set(header_df.columns)
+            self.join_key_valid = False
+            for join_key in join_keys:
+                if set(join_key).issubset(header_cols):
+                    self.join_key_valid = True
+                    break
+            if not self.join_key_valid:
+                raise ValueError("Join keys column(s) provided are not present in the data.")
             self.data = pd.read_csv(data_path)
             logger.info("Data loaded from disk.")
         else:

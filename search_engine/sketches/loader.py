@@ -122,6 +122,10 @@ class SketchLoader:
                 del self.sketch_x_x_batch[prev_batch_id]
             self.load_sketches(remaining_seller_1, remaining_seller_x, remaining_seller_x_x,
                                feature_index_map, seller_id, cur_df_offset, to_disk)
+        if to_disk:
+            # save feature_index_map
+            torch.save(feature_index_map, os.path.join(self.disk_dir, "feature_index_map.pt"))
+
 
     @handle_exceptions
     @log_execution(logging.INFO)
@@ -146,6 +150,20 @@ class SketchLoader:
             if batch_id in self.sketch_x_y_batch:
                 sketch_x_y_batch = self.sketch_x_y_batch[batch_id].to(self.device)
         return sketch_1_batch, sketch_x_batch, sketch_x_x_batch, sketch_x_y_batch
+
+    @handle_exceptions
+    @log_execution(logging.INFO)
+    def get_feature_index_map(self, from_disk=False):
+        """
+        Get the feature index map.
+
+        :param batch_id: Batch ID
+        :param from_disk: Whether to load from disk
+        :return: Feature index map
+        """
+        if from_disk:
+            return torch.load(os.path.join(self.disk_dir, "feature_index_map.pt"))
+        return self.feature_index_map
 
     @handle_exceptions
     @log_execution(logging.INFO)
