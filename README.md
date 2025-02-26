@@ -12,7 +12,7 @@ Please follow the instructions below to run the code.
 1. Clone the repository
 2. Make sure you are in the correct directory:
 ```bash
-cd Kitana-Data-Aug
+cd kitana-e2e
 ```
 3. Run the following command to install the required libraries:
 ```bash
