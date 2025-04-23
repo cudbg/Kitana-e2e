@@ -43,3 +43,20 @@ python sample_execution.py
 - **`statistics/`** - Statistical tools and functions. It contains a linear regression model to determine the augmentation effect.
 - **`utils/`** - General utilities used across the project for a variety of support tasks.
 - **`main.py`** - The entry point of the project, initializing and starting the search engine.
+
+## Expected Results
+You will see the following results in the `results` folder:
+- `comparison_country_extend_table_search_whiskers.png` - The comparison of the original and the augmented data.
+- Of course you can store the results as json files in the `results` folder.
+
+## Customize
+Please place the csv files you want to augment in the `data/` folder.
+Please place the csv files to search in the `data/` folder.
+
+Only one csv can be searched at a time, in theory.
+Multiple search keys are supported. Note that `[['Country', 'year']]` and `[['Country'], ['year']]` are different, the former is a composite key, the latter is a list of keys to be searched separately.
+Only one target feature is supported.
+
+You can try other configurations in `sample_execution.py`. The repo is designed for experiments only now, so not that robust. Should you have any questions, please contact me at `mz2998@columbia.edu`.
+
+P.S. TURL_setup branch is the most recent version. 

@@ -1,0 +1,129 @@
+{
+    "Cost_of_Living_Index_by_Country_2024.csv": {
+      "Document_ID": "DOC005",
+      "Document_Title": "Cost of Living Index by Country (2024)",
+      "Document_Description": "This dataset provides cost of living, rent, groceries, and other indices for countries in 2024.",
+      "Document_Caption": "Cost of Living Metrics"
+    },
+    "countries of the world.csv": {
+      "Document_ID": "DOC006",
+      "Document_Title": "Countries of the World",
+      "Document_Description": "Comprehensive demographic, geographic, and economic indicators for countries worldwide.",
+      "Document_Caption": "Global Country-Level Data"
+    },
+    "country_vaccinations.csv": {
+      "Document_ID": "DOC007",
+      "Document_Title": "Country Vaccinations",
+      "Document_Description": "Vaccination data including total doses, daily vaccinations, and per-hundred metrics across countries.",
+      "Document_Caption": "COVID-19 Vaccination Coverage"
+    },
+    "country_wise_latest.csv": {
+      "Document_ID": "DOC008",
+      "Document_Title": "Country-Wise Latest COVID Stats",
+      "Document_Description": "Latest reported confirmed cases, deaths, recoveries, and related rates by country.",
+      "Document_Caption": "Most Recent Country-Level COVID Data"
+    },
+    "country-wise-average.csv": {
+      "Document_ID": "DOC009",
+      "Document_Title": "Country-Wise Average Indicators",
+      "Document_Description": "Aggregated health and nutrition indicators (wasting, stunting, overweight) by country.",
+      "Document_Caption": "Health & Nutrition Averages"
+    },
+    "Country.csv": {
+      "Document_ID": "DOC010",
+      "Document_Title": "Core Country Reference",
+      "Document_Description": "Basic ISO codes, region, income group, currency, and other metadata for countries.",
+      "Document_Caption": "Reference for Country Identifiers"
+    },
+    "fifa_ranking.csv": {
+      "Document_ID": "DOC011",
+      "Document_Title": "FIFA Ranking Dataset",
+      "Document_Description": "Historical FIFA rankings, points, and confederation details for global football teams.",
+      "Document_Caption": "FIFA Rankings and Metrics"
+    },
+    "Final.csv": {
+      "Document_ID": "DOC012",
+      "Document_Title": "Telecom and Internet Usage",
+      "Document_Description": "Cellular subscription, broadband subscription, internet usage, and related data by country over time.",
+      "Document_Caption": "Connectivity and Telecom Indicators"
+    },
+    "GCB2022v27_MtCO2_flat.csv": {
+      "Document_ID": "DOC013",
+      "Document_Title": "Global Carbon Budget 2022 (MtCO2)",
+      "Document_Description": "Fossil CO2 emissions (total, coal, oil, gas, cement, flaring), per capita, and year for countries.",
+      "Document_Caption": "Carbon Emissions and Energy Sources"
+    },
+    "global air pollution dataset.csv": {
+      "Document_ID": "DOC014",
+      "Document_Title": "Global Air Pollution",
+      "Document_Description": "AQI metrics (PM2.5, PM10, CO, Ozone, NO2), categories, and city-level air quality info across countries.",
+      "Document_Caption": "Worldwide Air Quality Indicators"
+    },
+    "global-data-on-sustainable-energy (1).csv": {
+      "Document_ID": "DOC015",
+      "Document_Title": "Global Sustainable Energy Data",
+      "Document_Description": "Electricity generation from renewables, fossil fuels, cooking fuel access, and other energy indicators.",
+      "Document_Caption": "Energy and Renewables Metrics"
+    },
+    "GlobalWeatherRepository.csv": {
+      "Document_ID": "DOC016",
+      "Document_Title": "Global Weather Repository",
+      "Document_Description": "Up-to-date temperature, humidity, air quality, and meteorological data for global locations.",
+      "Document_Caption": "Worldwide Weather Statistics"
+    },
+    "Life Expectancy Data.csv": {
+      "Document_ID": "DOC017",
+      "Document_Title": "Life Expectancy and Health",
+      "Document_Description": "Life expectancy, adult mortality, infant deaths, health expenditure, and socioeconomic factors by country.",
+      "Document_Caption": "Health and Demographic Indicators"
+    },
+    "Petrol Dataset June 20 2022.csv": {
+      "Document_ID": "DOC018",
+      "Document_Title": "Petrol and Fuel Prices Dataset",
+      "Document_Description": "Global or regional petrol pricing information as of June 20, 2022 (some read/encoding issues).",
+      "Document_Caption": "Fuel Cost Dataset"
+    },
+    "population_by_country_2020.csv": {
+      "Document_ID": "DOC019",
+      "Document_Title": "Population by Country (2020)",
+      "Document_Description": "Yearly population, net change, density, land area, and related demographic info for countries in 2020.",
+      "Document_Caption": "2020 Population Data"
+    },
+    "raw_data.csv": {
+      "Document_ID": "DOC020",
+      "Document_Title": "Raw COVID-19 Case Data",
+      "Document_Description": "Total COVID cases, deaths, stringency index, and GDP or population info by date and country.",
+      "Document_Caption": "Unprocessed COVID-19 Dataset"
+    },
+    "wfp_market_food_prices.csv": {
+      "Document_ID": "DOC021",
+      "Document_Title": "WFP Market Food Prices",
+      "Document_Description": "Market prices for various food commodities across countries (some encoding issues).",
+      "Document_Caption": "Food Price Tracking Dataset"
+    },
+    "who_suicide_statistics.csv": {
+      "Document_ID": "DOC022",
+      "Document_Title": "WHO Suicide Statistics",
+      "Document_Description": "Country-level suicide counts by year, age group, and sex, with population references.",
+      "Document_Caption": "Global Suicide Data"
+    },
+    "world-data-2023.csv": {
+      "Document_ID": "DOC023",
+      "Document_Title": "World Data 2023",
+      "Document_Description": "Varied metrics including population, land use, CO2 emissions, health expenditure, and tax info for 2023.",
+      "Document_Caption": "Comprehensive Global Indicators"
+    },
+    "world-happiness-report-2019.csv": {
+      "Document_ID": "DOC024",
+      "Document_Title": "World Happiness Report (2019)",
+      "Document_Description": "Happiness scores, ladder indices, social support, and other metrics as of 2019.",
+      "Document_Caption": "Global Happiness Indicators (2019)"
+    },
+    "world-happiness-report-2021.csv": {
+      "Document_ID": "DOC025",
+      "Document_Title": "World Happiness Report (2021)",
+      "Document_Description": "Happiness ladder scores, freedom, corruption perception, and GDP indicators for 2021.",
+      "Document_Caption": "Global Happiness Indicators (2021)"
+    }
+  }
+  
