@@ -45,6 +45,8 @@ python sample_execution.py
 - **`main.py`** - The entry point of the project, initializing and starting the search engine.
 
 ## A typical flow
+<img width="1073" alt="image" src="https://github.com/user-attachments/assets/97c2e083-d15a-4156-b2d4-b7f98c835c93" />
+
 
 This part outlines the typical execution flow within the codebase, starting from input data specifications to the generation of experiment results, specifically focusing on how a single experiment run (like the one configured for `data/country_extend_1/seller`) proceeds.
 
